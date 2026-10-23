@@ -1,14 +1,15 @@
 terraform {
-  required_version = ">=0.13.0"
+  required_version = "~>1.17.0"
 
-  backend "s3" {
-    bucket  = "YOUR_AWS_ACCOUNT_ID_HERE-tfstate"
-    encrypt = "true"
-    key     = "fargate-demo.tfstate"
-    region  = "eu-west-2"
-  }
+  backend "local" {}
 }
 
 provider "aws" {
   region = var.region
+
+  default_tags {
+    tags = {
+      Name = var.name
+    }
+  }
 }

@@ -2,10 +2,6 @@ resource "aws_security_group" "ecs_alb" {
   name        = "${var.name}-alb"
   description = "controls access to the ${var.name} alb"
   vpc_id      = aws_vpc.ecs.id
-
-  tags = {
-    Name = "${var.name}-ecs-alb"
-  }
 }
 
 resource "aws_security_group_rule" "ecs_alb_1" {
@@ -30,10 +26,6 @@ resource "aws_security_group" "ecs_targets" {
   name        = "${var.name}-targets"
   description = "controls access to the ${var.name} targets"
   vpc_id      = aws_vpc.ecs.id
-
-  tags = {
-    Name = "${var.name}-ecs-targets"
-  }
 }
 
 resource "aws_security_group_rule" "ecs_targets_1" {

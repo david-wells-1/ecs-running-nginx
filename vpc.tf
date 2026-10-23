@@ -1,17 +1,9 @@
 resource "aws_vpc" "ecs" {
   cidr_block = var.vpc_cidr
-
-  tags = {
-    Name = var.name
-  }
 }
 
 resource "aws_internet_gateway" "ecs" {
   vpc_id = aws_vpc.ecs.id
-
-  tags = {
-    Name = var.name
-  }
 }
 
 resource "aws_subnet" "ecs" {
@@ -20,10 +12,6 @@ resource "aws_subnet" "ecs" {
   cidr_block              = "10.0.${10 + count.index}.0/24"
   availability_zone       = data.aws_availability_zones.available.names[count.index]
   map_public_ip_on_launch = true
-
-  tags = {
-    Name = "${var.name}-${data.aws_availability_zones.available.names[count.index]}"
-  }
 }
 
 resource "aws_default_route_table" "ecs" {
@@ -32,10 +20,6 @@ resource "aws_default_route_table" "ecs" {
   route {
     cidr_block = "0.0.0.0/0"
     gateway_id = aws_internet_gateway.ecs.id
-  }
-
-  tags = {
-    Name = var.name
   }
 }
 

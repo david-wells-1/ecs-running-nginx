@@ -7,11 +7,11 @@ variable "memory" {
 }
 
 variable "name" {
-  default = "fargate-demo"
+  default = "ecs-running-nginx"
 }
 
 variable "pod_count" {
-  default = "3"
+  default = "1"
 }
 
 variable "port" {

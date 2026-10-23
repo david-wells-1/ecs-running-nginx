@@ -18,10 +18,6 @@ resource "aws_iam_role" "ecs_task_execution_role" {
   ]
 }
 EOF
-
-  tags = {
-    Name = var.name
-  }
 }
 
 resource "aws_iam_policy" "ecs_task_execution_role_policy" {
@@ -33,12 +29,15 @@ resource "aws_iam_policy" "ecs_task_execution_role_policy" {
   "Statement": [
     {
       "Action": [
-        "ecr:GetAuthorizationToken",
         "ecr:BatchCheckLayerAvailability",
-        "ecr:GetDownloadUrlForLayer",
         "ecr:BatchGetImage",
+        "ecr:GetAuthorizationToken",
+        "ecr:GetDownloadUrlForLayer",
+        "logs:CreateLogGroup",
         "logs:CreateLogStream",
-        "logs:PutLogEvents"
+        "logs:DescribeLogStreams",
+        "logs:PutLogEvents",
+        "logs:PutSubscriptionFilter"
       ],
       "Effect": "Allow",
       "Resource": "*"

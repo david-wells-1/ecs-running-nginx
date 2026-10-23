@@ -1,28 +1,29 @@
-## Pre-Requisite
-The s3 bucket should already exist in your account `YOUR_AWS_ACCOUNT_ID_HERE-tfstate`, this is used to store the terraform state file.
-
 ## Setup
-Add values to the variables in `ecr/setup.sh` 
 
+Ceate and publish a docker image to `ECR`, which will be used by ECS.
 ```
 cd ecr/
 ./setup.sh
 ```
-This will create and publish a docker image to `ECR`, which will be used by ECS.
-
 Deploy the terraform resources to create the ECS cluster.
+```
+terraform init
+terraform plan
+terraform apply
+```
 
+<!-- BEGIN_TF_DOCS -->
 ## Requirements
 
 | Name | Version |
-|------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >=0.13.0 |
+| ---- | ------- |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | ~>1.17.0 |
 
 ## Providers
 
 | Name | Version |
-|------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | n/a |
+| ---- | ------- |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | 6.70.0 |
 
 ## Modules
 
@@ -31,9 +32,11 @@ No modules.
 ## Resources
 
 | Name | Type |
-|------|------|
+| ---- | ---- |
+| [aws_cloudwatch_log_group.ecs_logs](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudwatch_log_group) | resource |
 | [aws_default_route_table.ecs](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/default_route_table) | resource |
 | [aws_ecs_cluster.ecs](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ecs_cluster) | resource |
+| [aws_ecs_cluster_capacity_providers.ecs](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ecs_cluster_capacity_providers) | resource |
 | [aws_ecs_service.ecs](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ecs_service) | resource |
 | [aws_ecs_task_definition.ecs](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ecs_task_definition) | resource |
 | [aws_iam_policy.ecs_task_execution_role_policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy) | resource |
@@ -58,11 +61,11 @@ No modules.
 ## Inputs
 
 | Name | Description | Type | Default | Required |
-|------|-------------|------|---------|:--------:|
+| ---- | ----------- | ---- | ------- | :------: |
 | <a name="input_cpu"></a> [cpu](#input\_cpu) | n/a | `number` | `256` | no |
 | <a name="input_memory"></a> [memory](#input\_memory) | n/a | `number` | `512` | no |
-| <a name="input_name"></a> [name](#input\_name) | n/a | `string` | `"fargate-demo"` | no |
-| <a name="input_pod_count"></a> [pod\_count](#input\_pod\_count) | n/a | `string` | `"3"` | no |
+| <a name="input_name"></a> [name](#input\_name) | n/a | `string` | `"ecs-running-nginx"` | no |
+| <a name="input_pod_count"></a> [pod\_count](#input\_pod\_count) | n/a | `string` | `"1"` | no |
 | <a name="input_port"></a> [port](#input\_port) | n/a | `number` | `80` | no |
 | <a name="input_protocol"></a> [protocol](#input\_protocol) | n/a | `string` | `"HTTP"` | no |
 | <a name="input_region"></a> [region](#input\_region) | n/a | `string` | `"eu-west-2"` | no |
@@ -71,5 +74,6 @@ No modules.
 ## Outputs
 
 | Name | Description |
-|------|-------------|
+| ---- | ----------- |
 | <a name="output_aws_lb"></a> [aws\_lb](#output\_aws\_lb) | The public dns name of the external lb |
+<!-- END_TF_DOCS -->

@@ -18,7 +18,15 @@ resource "aws_ecs_task_definition" "ecs" {
         "containerPort": ${var.port},
         "hostPort": ${var.port}
       }
-    ]
+    ],
+    "logConfiguration": {
+      "logDriver": "awslogs",
+      "options": {
+        "awslogs-group": "/ecs/${var.name}",
+        "awslogs-region": "${var.region}",
+        "awslogs-stream-prefix": "ecs"
+      }
+    }    
   }
 ]
 DEFINITION  
